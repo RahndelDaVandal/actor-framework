@@ -1,6 +1,4 @@
-{
-  "schemaVersion": 1,
-  "label": "Coding hours",
-  "message": "130h",
-  "color": "informational"
-}
+{ "schemaVersion":1,
+  "label":"Coding hours",
+  "message":"132h",
+  "color":"informational" }
