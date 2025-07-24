@@ -1,0 +1,75 @@
+name: Coding‑hours report
+
+on:
+  schedule:
+    - cron: '0 0 * * 1'          # every Monday at 00:00 UTC
+  workflow_dispatch:             # manual trigger
+    inputs:
+      window_start:
+        description: 'Report since YYYY‑MM‑DD'
+        required: false
+
+permissions:
+  contents: write                # needed only if you keep the commit step
+
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    steps:
+      # 1️⃣ Check out full history
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # 2️⃣ Set up Go (>=1.24 to support git-hours v0.1.2 go.mod)
+      - name: Setup Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.24'
+
+      # 3️⃣ Install git-hours (Go) v0.1.2 with go.mod patch
+      - name: Install git-hours (Go) v0.1.2
+        run: |
+          git clone --depth 1 --branch v0.1.2 https://github.com/trinhminhtriet/git-hours.git git-hours-src
+          cd git-hours-src
+          sed -i 's/go 1.24.1/go 1.24/' go.mod
+          go install .
+
+      # 4️⃣ Generate the report into a text file
+      - name: Generate report
+        run: |
+          ARGS=""
+          if [ -n "${{ github.event.inputs.window_start }}" ]; then
+            ARGS+=" -since ${{ github.event.inputs.window_start }}"
+          fi
+          git-hours $ARGS > git-hours.txt
+
+      # 5️⃣ Publish the raw report to the run summary
+      - name: Add workflow summary
+        run: |
+          echo "### ⏱ Coding‑hours report" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          cat git-hours.txt >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+
+      # 6️⃣ Upload the raw output as an artifact
+      - uses: actions/upload-artifact@v4
+        with:
+          name: git-hours-output-${{ github.run_id }}
+          path: git-hours.txt
+          retention-days: 30
+
+      # 7️⃣ (Optional) Commit to metrics branch
+      - name: Commit to metrics branch
+        if: github.ref == 'refs/heads/main'
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}  # PAT needed for write access
+        run: |
+          git config --global user.name "git-hours bot"
+          git config --global user.email "bot@github.com"
+          git switch -C metrics || git checkout metrics
+          mkdir -p reports
+          mv git-hours.txt reports/git-hours-$(date +%F).txt
+          git add reports
+          git commit -m "chore(metrics): add report $(date +%F)" || echo "No change"
+          git push https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }} metrics
