@@ -33,6 +33,11 @@ Actor Framework (AF) is NI’s reference implementation of the Actor Model in La
 - **Primary LabVIEW target:** 2020 SP1 or later (32- & 64-bit)
 - **Package format:** VIPM (`.vip`) built by GitHub Actions for every merge to `main` and tagged release.
 
+State Pattern Actor is an add-on for Actor Framework that enables behavioral state for actors that inherit from this package's actor class.  As it is optional, it has a separate installer.
+- **Primary LabVIEW target:** The initial commit targets 2013 or later.  It is likely unreasonable to maintain this level of backward compatibility.
+- **Package format:** VIPM ('.vip')
+- **License variance:**  The initial commit and package are licensed under NI's old Sample Code license (2014).  This should be updated to the MIT license with the next revision.
+
 ---
 
 ## Getting Started
