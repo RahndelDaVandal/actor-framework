@@ -1,0 +1,46 @@
+name: (Work In Progress) Run VIA tests (GitHub Hosted)
+
+on:
+  # TODO: Uncomment the original triggers below when ready for full deployment
+  pull_request:
+    branches:
+      - feature/github-actions-cicd  # Temporary: only run on this branch
+  #     - main
+  #     - develop
+  #     - release/*
+  #     - feature/*
+  #     - hotfix/*
+  #   types:
+  #     - opened
+  #     - synchronize
+  #     - reopened
+  #     - ready_for_review
+
+  push:
+    branches:
+      - feature/github-actions-cicd  # Temporary: only run on this branch
+      # - main
+      # - develop
+      # - release/*
+      # - hotfix/*
+      # - feature/*
+
+  workflow_dispatch:
+
+jobs:
+  run-via-tests:
+    name: Run VI Analyzer tests
+    runs-on: ubuntu-latest
+    container:
+      image: nationalinstruments/labview:2025q3patch1-linux
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run VI Analyzer tests
+        shell: bash
+        working-directory: ${{ github.workspace }}
+        run: |
+          # TODO: Add commands to run VI Analyzer tests on files in this repo
+          echo "Work In progress: VI Analyzer tests to be implemented."
