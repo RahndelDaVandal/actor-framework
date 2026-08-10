@@ -1,0 +1,13 @@
+# Auto-update the pinned LabVIEW CI tooling. Dependabot opens a reviewable PR
+# whenever the referenced reusable workflow / action tag gets a new release.
+version: 2
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    commit-message:
+      prefix: "ci"
+    labels:
+      - "dependencies"
+      - "labview-ci"
