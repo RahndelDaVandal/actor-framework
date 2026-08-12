@@ -1,8 +1,17 @@
 {
   "schema": 1,
   "repo": "RahndelDaVandal/actor-framework",
-  "sha": "1059c3108cfdce84017b4ad715ec0d77e237ec82",
+  "sha": "e4e300183ab59014972eb744b9004399f7f1efdb",
   "revisions": [
+    {
+      "sha": "e4e300183ab59014972eb744b9004399f7f1efdb",
+      "short": "e4e3001",
+      "message": "Updated dashboard-pages.yml to not use thirdparty tools for pages posting",
+      "author": "Connor Sahleen",
+      "date": "2026-08-12T19:30:34Z",
+      "project": false,
+      "dep_only": false
+    },
     {
       "sha": "1059c3108cfdce84017b4ad715ec0d77e237ec82",
       "short": "1059c31",
@@ -891,15 +900,6 @@
       "message": "Update manual-test-processing.yml",
       "author": "sergiov-ni",
       "date": "2025-04-14T04:44:41Z",
-      "project": false,
-      "dep_only": false
-    },
-    {
-      "sha": "3e25ff2b483968c910736641d2634bc28fe4168f",
-      "short": "3e25ff2",
-      "message": "Update manual-test-processing.yml",
-      "author": "sergiov-ni",
-      "date": "2025-04-14T04:28:47Z",
       "project": false,
       "dep_only": false
     },
