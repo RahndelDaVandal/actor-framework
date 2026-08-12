@@ -1,0 +1,123 @@
+{
+  "schema": 2,
+  "platform": "linux",
+  "version": "linux-afd33486390a",
+  "labview_version": "2026",
+  "base_image": "nationalinstruments/labview:latest-linux",
+  "base_digest": "ghcr.io/rahndeldavandal/actor-framework-labview@sha256:16ac534dfdd283ab0ef6b7e42e7f31c9e3dd818153f3e06c7eef151ce60b27c4",
+  "seed_image": "",
+  "seed_digest": "",
+  "worker_layer": "",
+  "copied_from_base": false,
+  "image_ref": "ghcr.io/rahndeldavandal/actor-framework-labview:linux-afd33486390a",
+  "build_date": "2026-08-12T20:36:57Z",
+  "git_sha": "c03b9b209024a63572ba96d4846820ca99bfd70d",
+  "run_url": "https://github.com/RahndelDaVandal/actor-framework/actions/runs/31637554438",
+  "vipc": [
+    {
+      "file": "Dependencies.vipc",
+      "packages": [
+        "jki_lib_serialization-1.0.1.14",
+        "jki_lib_state_machine-2024.0.3.23",
+        "jki_lib_unicode-1.0.0.7",
+        "jki_rsc_toolkits_palette-1.1-1",
+        "oglib_array-6.0.1.20",
+        "oglib_error-6.0.0.26",
+        "oglib_file-6.0.2.28",
+        "oglib_lvdata-6.0.0.45",
+        "oglib_lvzip-5.0.9-1"
+      ],
+      "present": true
+    },
+    {
+      "file": "runner_dependencies.vipc",
+      "packages": [
+        "jdp_science_jsontext-1.9.0.124",
+        "jdp_science_lib_common_utilities-1.4.1.18",
+        "jki_lib_caraya-1.4.3.147",
+        "jki_lib_state_machine-2024.0.3.23",
+        "jki_lib_vipm_api-2020.0.3.80",
+        "jki_rsc_toolkits_palette-1.1-1",
+        "sas_workshops_lib_lvbuildspec_for_g_cli-1.2.0.99",
+        "sas_workshops_lib_vipb_builder_for_g_cli-1.1.5.42",
+        "wiresmith_technology_lib_g_cli-3.0.1.98"
+      ],
+      "present": true
+    }
+  ],
+  "vipm_raw": "Installed packages (13):\n  jdp_science_jsontext v1.9.0.124\n  jdp_science_lib_common_utilities v1.4.1.18\n  jki_lib_caraya v1.4.3.147\n  jki_lib_serialization v1.0.1.14\n  jki_lib_state_machine v2024.0.3.23\n  jki_lib_unicode v1.0.0.7\n  oglib_array v6.0.1.20\n  oglib_error v6.0.0.26\n  oglib_file v6.0.2.28\n  oglib_lvdata v6.0.0.45\n  sas_workshops_lib_lvbuildspec_for_g_cli v1.2.0.99\n  sas_workshops_lib_vipb_builder_for_g_cli v1.1.5.42\n  wiresmith_technology_lib_g_cli v3.0.1.98\n",
+  "vipm_packages": [
+    {
+      "name": "Installed",
+      "version": "",
+      "label": "Installed"
+    },
+    {
+      "name": "jdp_science_jsontext",
+      "version": "v1.9.0.124",
+      "label": "jdp_science_jsontext-v1.9.0.124"
+    },
+    {
+      "name": "jdp_science_lib_common_utilities",
+      "version": "v1.4.1.18",
+      "label": "jdp_science_lib_common_utilities-v1.4.1.18"
+    },
+    {
+      "name": "jki_lib_caraya",
+      "version": "v1.4.3.147",
+      "label": "jki_lib_caraya-v1.4.3.147"
+    },
+    {
+      "name": "jki_lib_serialization",
+      "version": "v1.0.1.14",
+      "label": "jki_lib_serialization-v1.0.1.14"
+    },
+    {
+      "name": "jki_lib_state_machine",
+      "version": "v2024.0.3.23",
+      "label": "jki_lib_state_machine-v2024.0.3.23"
+    },
+    {
+      "name": "jki_lib_unicode",
+      "version": "v1.0.0.7",
+      "label": "jki_lib_unicode-v1.0.0.7"
+    },
+    {
+      "name": "oglib_array",
+      "version": "v6.0.1.20",
+      "label": "oglib_array-v6.0.1.20"
+    },
+    {
+      "name": "oglib_error",
+      "version": "v6.0.0.26",
+      "label": "oglib_error-v6.0.0.26"
+    },
+    {
+      "name": "oglib_file",
+      "version": "v6.0.2.28",
+      "label": "oglib_file-v6.0.2.28"
+    },
+    {
+      "name": "oglib_lvdata",
+      "version": "v6.0.0.45",
+      "label": "oglib_lvdata-v6.0.0.45"
+    },
+    {
+      "name": "sas_workshops_lib_lvbuildspec_for_g_cli",
+      "version": "v1.2.0.99",
+      "label": "sas_workshops_lib_lvbuildspec_for_g_cli-v1.2.0.99"
+    },
+    {
+      "name": "sas_workshops_lib_vipb_builder_for_g_cli",
+      "version": "v1.1.5.42",
+      "label": "sas_workshops_lib_vipb_builder_for_g_cli-v1.1.5.42"
+    },
+    {
+      "name": "wiresmith_technology_lib_g_cli",
+      "version": "v3.0.1.98",
+      "label": "wiresmith_technology_lib_g_cli-v3.0.1.98"
+    }
+  ],
+  "nipkg_raw": "",
+  "nipkg_packages": []
+}
