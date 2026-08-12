@@ -2,16 +2,15 @@
 # Records what was installed so the install can be reviewed, re-run, or upgraded.
 schemaVersion: 1
 installedVersion: 4.12.4
-installedAt: 2026-08-10T21:24:24Z
+installedAt: 2026-08-12T20:16:22Z
 provider: github
 source:
   repo: elijah286/LabVIEW-CI-with-Containers
   ref: v4.12.4
 config:
   labviewVersion: "2026"
-  branch: develop
+  branch: main
   os: [linux]
-  container:
-    use: base
 activities:
   - masscompile
+  - custom-image
