@@ -55,22 +55,7 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Deploy dashboard to GitHub Pages
-        id: deploy
-        continue-on-error: true        #   don't fail the run on a gh-pages push race…
-        uses: peaceiris/actions-gh-pages@v4.1.0
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ci-out/dashboard
-          destination_dir: .
-          keep_files: true             #   ← KEEP masscompile/… — aggregate, don't overwrite
-      - name: Wait out a gh-pages push race
-        if: steps.deploy.outcome == 'failure'
-        run: sleep 30
-      - name: Deploy dashboard to GitHub Pages (retry)
-        if: steps.deploy.outcome == 'failure'
-        uses: peaceiris/actions-gh-pages@v4.1.0
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ci-out/dashboard
-          destination_dir: .
-          keep_files: true
+        uses: ./.github/actions/publish-gh-pages   #   the repo's OWN retry-safe action, vendored
+        with:                                      #   in L11 — the SAME one masscompile deploys with.
+          publish_dir: ci-out/dashboard            #   Overlays onto gh-pages (keeps the masscompile
+          commit_message: Publish dashboard        #   report), retries on a push race internally.
