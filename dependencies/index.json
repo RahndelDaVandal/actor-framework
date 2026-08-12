@@ -1,8 +1,17 @@
 {
   "schema": 1,
   "repo": "RahndelDaVandal/actor-framework",
-  "sha": "e4e300183ab59014972eb744b9004399f7f1efdb",
+  "sha": "c03b9b209024a63572ba96d4846820ca99bfd70d",
   "revisions": [
+    {
+      "sha": "c03b9b209024a63572ba96d4846820ca99bfd70d",
+      "short": "c03b9b2",
+      "message": "Add custom-image capability (linux worker bake)",
+      "author": "Connor Sahleen",
+      "date": "2026-08-12T20:17:03Z",
+      "project": false,
+      "dep_only": false
+    },
     {
       "sha": "e4e300183ab59014972eb744b9004399f7f1efdb",
       "short": "e4e3001",
@@ -895,15 +904,6 @@
       "dep_only": false
     },
     {
-      "sha": "f67f0b47d8325eda26e2638f499fdc3cf2b66aad",
-      "short": "f67f0b4",
-      "message": "Update manual-test-processing.yml",
-      "author": "sergiov-ni",
-      "date": "2025-04-14T04:44:41Z",
-      "project": false,
-      "dep_only": false
-    },
-    {
       "sha": "467cd4697d6fe516ccf1f512f97c0a9b7db0a562",
       "short": "467cd46",
       "message": "Deleting .vip, it was confusing CI tooling looking for .vip files",
@@ -1427,7 +1427,7 @@
     }
   ],
   "config": {
-    "use": "base",
+    "use": "",
     "actions": {},
     "vipc": [],
     "dragon": [],
@@ -1564,35 +1564,68 @@
     "install_set": [],
     "conflicts": []
   },
-  "system": [],
+  "system": [
+    {
+      "name": "VI Browser 2.0 toimages runner",
+      "source": "Repository Go code",
+      "path": ".github/labview/toimages/main.go",
+      "details": "Batch runner compiled from repo Go source; Linux uses the toimages GHCR image and Windows builds runner.exe in the workflow.",
+      "platforms": {
+        "windows": {
+          "present": false,
+          "label": ""
+        },
+        "linux": {
+          "present": false,
+          "label": ""
+        }
+      }
+    },
+    {
+      "name": "lvctl render engine",
+      "source": "Repository Go code + embedded VIs",
+      "path": ".github/labview/toimages/_ni/labview/lvctl",
+      "details": "Renderer used by VI Browser 2.0 to drive LabVIEW and emit position-aware frame JSON.",
+      "platforms": {
+        "windows": {
+          "present": false,
+          "label": ""
+        },
+        "linux": {
+          "present": false,
+          "label": ""
+        }
+      }
+    }
+  ],
   "columns": [
     {
       "key": "windows",
       "label": "Windows",
       "platform": "windows",
       "defaultTag": "latest",
-      "tag": "base",
-      "ready": true,
+      "tag": "latest",
+      "ready": false,
       "packages": [],
       "failed_packages": [],
-      "nipkg_ready": true,
+      "nipkg_ready": false,
       "nipkg_packages": [],
       "labview_version": "",
-      "version": "base"
+      "version": "latest"
     },
     {
       "key": "linux",
       "label": "Linux",
       "platform": "linux",
       "defaultTag": "latest",
-      "tag": "base",
-      "ready": true,
+      "tag": "latest",
+      "ready": false,
       "packages": [],
       "failed_packages": [],
-      "nipkg_ready": true,
+      "nipkg_ready": false,
       "nipkg_packages": [],
       "labview_version": "",
-      "version": "base"
+      "version": "latest"
     }
   ]
 }
