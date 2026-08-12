@@ -1,0 +1,76 @@
+# CI Dashboard — GitHub Pages. Owns the triggers + the Pages deploy.
+name: CI Dashboard — GitHub Pages
+run-name: Publish CI dashboard - ${{ github.event_name == 'workflow_dispatch' && 'manual run' || github.sha }}
+
+on:                                    # ── triggers (lesson 09): who fires this, and when
+  push:
+    branches: [develop]                #   config changes on your default branch rebuild it
+    paths:
+      - '.github/labview-ci.yml'
+      - '.github/workflows/dashboard-pages.yml'
+      - '**/*.vipc'
+      - '**/*.dragon'
+  status:                              #   ANY commit-status post → rebuild. This is how it
+                                       #   picks up masscompile's "92% compiled" with no wiring
+  workflow_run:                        #   after other capabilities finish (none installed yet)
+    workflows:
+      - "Mass Compile — Windows Container"
+      - "Run VI Analyzer — Windows Container"
+      - "VIDiff Report — Linux Container"
+      - "Build LabVIEW CI Image - Linux"
+    types: [completed]
+  schedule:
+    - cron: '0 * * * *'                #   hourly safety refresh
+  workflow_dispatch:                   #   ← lets you fire it by hand (must live on develop)
+
+concurrency:                           # one push fans out into many status events; collapse
+  group: dashboard-pages               # them into one latest-wins rebuild
+  cancel-in-progress: true
+
+permissions:                           # ── the damage ceiling (lesson 06)
+  contents: write                      #   push the built site to the gh-pages branch
+  statuses: read                       #   read the badges it aggregates
+  actions: read                        #   NOTE: no pages:write — classic branch model (L08)
+
+jobs:
+  build-dashboard:
+    runs-on: ubuntu-latest             #   plain Linux runner — NO container, no OS gate.
+    steps:                             #   (the L11 Windows-only trap does not apply here)
+      - name: Checkout repository
+        uses: actions/checkout@v5
+      - name: Read opted-in tooling ref from config
+        id: cfg
+        shell: bash
+        run: |
+          REF=$(awk '/^[[:space:]]*ref:[[:space:]]/{print $2; exit}' .github/labview-ci.yml 2>/dev/null)
+          echo "ref=${REF:-v4.12.4}" >> "$GITHUB_OUTPUT"
+      - name: Check out tooling (opted-in version)
+        uses: actions/checkout@v5      #   the generator lives in the tooling repo, pinned at
+        with:                          #   the ref in labview-ci.yml (v4.12.4) — fetched at runtime
+          repository: elijah286/LabVIEW-CI-with-Containers
+          ref: ${{ steps.cfg.outputs.ref }}
+          path: _lvci
+      - name: Build CI dashboard
+        uses: ./_lvci/actions/dashboard
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Deploy dashboard to GitHub Pages
+        id: deploy
+        continue-on-error: true        #   don't fail the run on a gh-pages push race…
+        uses: peaceiris/actions-gh-pages@v4.1.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ci-out/dashboard
+          destination_dir: .
+          keep_files: true             #   ← KEEP masscompile/… — aggregate, don't overwrite
+      - name: Wait out a gh-pages push race
+        if: steps.deploy.outcome == 'failure'
+        run: sleep 30
+      - name: Deploy dashboard to GitHub Pages (retry)
+        if: steps.deploy.outcome == 'failure'
+        uses: peaceiris/actions-gh-pages@v4.1.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ci-out/dashboard
+          destination_dir: .
+          keep_files: true
